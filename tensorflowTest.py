@@ -47,7 +47,7 @@ if __name__ == "__main__":
     # Reading training set(without test set)
     data = pd.read_csv('features.csv', header=None)
 
-    # Retrieve features into matrix, then converting ther matrix to array
+    # Retrieve features into matrix, then converting that matrix to array
     x_orig = np.array(data.iloc[:, 0:-1].values)
 
     # Data labels(zero or one), then converting the matrix to array

@@ -3,11 +3,6 @@ import pandas as pd
 import numpy as np
 from joblib.numpy_pickle_utils import xrange
 
-
-def sigmoid(x):
-    return 1 / (1.0 + np.exp(-x))
-
-
 def predict(X):
     return np.round(X)
 
@@ -26,7 +21,7 @@ if __name__ == "__main__":
     labels = 1  # 1 bit for prediction classes
 
     # (hl1_size, hl2_size) = (100, 50)
-    hl1_size = 10
+    hl1_size = 19
 
     # tf Graph Input
     X = tf.compat.v1.placeholder(tf.float32, [None, features])
@@ -55,7 +50,7 @@ if __name__ == "__main__":
     # cross_entropy = -tf.reduce_mean(tf.reduce_sum(pred * tf.log(y_clipped)
     #                                               + (1 - pred) * tf.log(1 - y_clipped), axis=1))
     #cross_entropy = tf.nn.sigmoid_cross_entropy_with_logits(logits=pred, labels=Y)  # loss
-    alpha = 0.001
+    alpha = 0.008
     # Gradient Descent Optimizer
     optimizer = tf.compat.v1.train.GradientDescentOptimizer(alpha).minimize(cross_entropy)  # train phase
 
@@ -79,7 +74,7 @@ if __name__ == "__main__":
         correct_prediction = tf.equal(tf.argmax(pred, 1), tf.argmax(Y, 1))
         accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
-        training_epochs = 5000  # Training cycles
+        training_epochs = 1000  # Training cycles
         for epoch in range(training_epochs):
             # Running the Optimizer(training phase)
             sess.run(optimizer, feed_dict={X: x_orig, Y: y_orig})  # BGD, since we are using the whole training set

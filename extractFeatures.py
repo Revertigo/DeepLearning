@@ -31,7 +31,9 @@ def extract_features(wav_file, dir_name):
 
     # data = np.asarray(mfcc_feat).reshape(-1)  # Convert feature matrix to one big feature array. Not used for now
     data = np.mean(mfcc_feat, axis=0)  # average all columns
-    data = np.append(data, int(resolve_prediction(dir_name)))  # add the prediction to the end of the feature array.
+    label = int(resolve_prediction(dir_name))
+    data = np.append(data, 1 - label)  # add the oppossite to the predication to the end of the array.
+    data = np.append(data, label)  # add the prediction to the end of the feature array.
 
     return data
 
@@ -41,9 +43,10 @@ if __name__ == "__main__":
     data_set_path = 'C:\\Users\\Dekel\\Downloads\\לימודים\\deep learning\\an4_sphere\\an4\\wav\\an4_clstk\\'
     # path to the test set
     data_set_test_path = 'C:\\Users\\Dekel\\Downloads\\לימודים\\deep learning\\an4_sphere\\an4\\wav\\an4test_clstk\\'
+    data_set_external = 'C:\\Users\\Dekel\\Downloads\\לימודים\\deep learning\\external_data\\'
 
-    path_list = Path(data_set_test_path).glob('**/*.wav')
-    with open("features_test.csv", 'w') as f:
+    path_list = Path(data_set_path).glob('**/*.wav')
+    with open("resources/two_prediction/features_two.csv", 'w') as f:
         for path in path_list:
             path_to_wav = str(path)  # convert object path to string
             dir_name = path_to_wav.rsplit('\\', 2)[1]  # extract directory name

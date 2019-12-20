@@ -45,7 +45,7 @@ if __name__ == "__main__":
              are discarded.
     '''
     # Reading training set(without test set)
-    data = pd.read_csv('features.csv', header=None)
+    data = pd.read_csv('resources/one_prediction/features.csv', header=None)
 
     # Retrieve features into matrix, then converting that matrix to array
     x_orig = np.array(data.iloc[:, 0:-1].values)
@@ -92,7 +92,7 @@ if __name__ == "__main__":
             sess.run(optimizer, feed_dict={X: x_orig, Y: y_orig})  # BGD, since we are using the whole training set
 
         # Reading test set
-        test_data = pd.read_csv('features_test.csv', header=None)
+        test_data = pd.read_csv('resources/one_prediction/features_test.csv', header=None)
 
         # Retrieve features into matrix
         test_data_x = np.array(test_data.iloc[:, 0:-1].values)

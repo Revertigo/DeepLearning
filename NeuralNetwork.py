@@ -34,6 +34,7 @@ if __name__ == "__main__":
     labels = 2  # 1 bit for prediction classes
 
     hl1_size = 19
+    hl2_size = 13
 
     # tf Graph Input
     X = tf.compat.v1.placeholder(tf.float32, [None, features])
@@ -46,16 +47,18 @@ if __name__ == "__main__":
     b1 = tf.Variable(tf.constant(0.1, shape=[hl1_size]))
     z1 = tf.nn.leaky_relu(tf.matmul(X, W1) + b1)  # Using ReLU as activation function in first hidden layer
     # Adding second hidden layer
-    # W2 = tf.Variable(tf.truncated_normal([hl1_size, hl2_size], stddev=0.1))
-    # b2 = tf.Variable(tf.constant(0.1, shape=[hl2_size]))
-    # z2 = tf.nn.relu(tf.matmul(z1, W2) + b2)
+    W2 = tf.Variable(tf.random.truncated_normal([hl1_size, hl2_size], stddev=0.1))
+    b2 = tf.Variable(tf.constant(0.1, shape=[hl2_size]))
+    z2 = tf.nn.leaky_relu(tf.matmul(z1, W2) + b2)
 
     # Adding original output layer
-    W = tf.Variable(tf.random.truncated_normal([hl1_size, labels], stddev=0.1))
+    #W = tf.Variable(tf.random.truncated_normal([hl1_size, labels], stddev=0.1))
+    W = tf.Variable(tf.random.truncated_normal([hl2_size, labels], stddev=0.1))
     b = tf.Variable(tf.constant(0.1, shape=[labels]))  # Trainable Variable Bias
 
     # Using Sigmoid since it's a binary classification
-    pred = tf.nn.sigmoid(tf.matmul(z1, W) + b)
+    #pred = tf.nn.sigmoid(tf.matmul(z1, W) + b)
+    pred = tf.nn.sigmoid(tf.matmul(z2, W) + b)
 
     cost = tf.reduce_mean(-(Y * tf.math.log(pred) + (1 - Y) * tf.math.log(1 - pred)))
     alpha = 0.008
@@ -103,7 +106,6 @@ if __name__ == "__main__":
                       + str(accuracy_history[-1]), "%")
 
         prediction_array = pred.eval(session=sess, feed_dict={X: test_data_x})
-        print(prediction_array)
         success = 0
         for i in xrange(len(prediction_array)):
             if predict(prediction_array[i][0]) == test_data_y[i][0]:

@@ -41,7 +41,7 @@ def training_process(fx, fy, alpha, cycles):
 
 if __name__ == "__main__":
     # Reading training set
-    data = pd.read_csv('features.csv', header=None)
+    data = pd.read_csv('resources/one_prediction/features.csv', header=None)
 
     # Retrieve features into matrix, then converting the matrix to array
     data_x = np.squeeze(np.asarray(data.iloc[:, 0:-1].values))
@@ -57,7 +57,7 @@ if __name__ == "__main__":
     w, b = training_process(fx, fy, alpha, cycles)  # alpha = 0.109, cycles = 8000
 
     # Reading test set
-    test_data = pd.read_csv('features_test.csv', header=None)
+    test_data = pd.read_csv('resources/one_prediction/features_test.csv', header=None)
 
     # Retrieve features into matrix
     test_data_x = test_data.iloc[:, 0:-1].values

@@ -19,8 +19,6 @@ def prediction_process(test_data_x, test_data_y, w, b):
         prediction = predict(test_data_x[i], w, b)
         if test_data_y[i] == prediction:
             success += 1
-
-    print("Accuracy is: " + str((success / len(test_data_x)) * 100.0) + " %")
     return success
 
 
@@ -65,5 +63,6 @@ if __name__ == "__main__":
     # Data labels actual true(zero or one)
     test_data_y = test_data.iloc[:, -1:].values
 
-    success_count = prediction_process(test_data_x, test_data_y, w, b)
-    print("success_count: " + str(success_count))
+    success = prediction_process(test_data_x, test_data_y, w, b)
+    print("Hit count: ", success, "(out of 130)")
+    print("Actual accuracy based on test set: " + str((success / len(test_data_x)) * 100.0) + " %")

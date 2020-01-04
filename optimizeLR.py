@@ -1,8 +1,8 @@
 import pandas as pd
 import numpy as np
 from joblib.numpy_pickle_utils import xrange
-from logistic_regression import training_process
-from logistic_regression import prediction_process
+from SelfWrittenLogisticRegression import training_process
+from SelfWrittenLogisticRegression import prediction_process
 
 if __name__ == "__main__":
     print("Working...")
